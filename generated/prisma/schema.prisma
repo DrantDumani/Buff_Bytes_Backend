@@ -15,14 +15,14 @@ datasource db {
 }
 
 model Category {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique @db.VarChar(256)
-  exercise Exercise?
+  id       Int        @id @default(autoincrement())
+  name     String     @unique @db.VarChar(256)
+  exercise Exercise[]
 }
 
 model Exercise {
   id       Int      @id @default(autoincrement())
-  cat_id   Int      @unique
+  cat_id   Int
   Category Category @relation(fields: [cat_id], references: [id])
   name     String   @unique @db.VarChar(256)
   type     e_type   @default(primary)

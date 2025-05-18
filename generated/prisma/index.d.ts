@@ -972,6 +972,36 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type CategoryCountOutputType
+   */
+
+  export type CategoryCountOutputType = {
+    exercise: number
+  }
+
+  export type CategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    exercise?: boolean | CategoryCountOutputTypeCountExerciseArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CategoryCountOutputType without action
+   */
+  export type CategoryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategoryCountOutputType
+     */
+    select?: CategoryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CategoryCountOutputType without action
+   */
+  export type CategoryCountOutputTypeCountExerciseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExerciseWhereInput
+  }
+
 
   /**
    * Models
@@ -1152,6 +1182,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     exercise?: boolean | Category$exerciseArgs<ExtArgs>
+    _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1172,6 +1203,7 @@ export namespace Prisma {
   export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["category"]>
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     exercise?: boolean | Category$exerciseArgs<ExtArgs>
+    _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
   export type CategoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1179,7 +1211,7 @@ export namespace Prisma {
   export type $CategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Category"
     objects: {
-      exercise: Prisma.$ExercisePayload<ExtArgs> | null
+      exercise: Prisma.$ExercisePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1578,7 +1610,7 @@ export namespace Prisma {
    */
   export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    exercise<T extends Category$exerciseArgs<ExtArgs> = {}>(args?: Subset<T, Category$exerciseArgs<ExtArgs>>): Prisma__ExerciseClient<$Result.GetResult<Prisma.$ExercisePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    exercise<T extends Category$exerciseArgs<ExtArgs> = {}>(args?: Subset<T, Category$exerciseArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExercisePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2014,6 +2046,11 @@ export namespace Prisma {
      */
     include?: ExerciseInclude<ExtArgs> | null
     where?: ExerciseWhereInput
+    orderBy?: ExerciseOrderByWithRelationInput | ExerciseOrderByWithRelationInput[]
+    cursor?: ExerciseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ExerciseScalarFieldEnum | ExerciseScalarFieldEnum[]
   }
 
   /**
@@ -3254,13 +3291,13 @@ export namespace Prisma {
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     id?: IntFilter<"Category"> | number
     name?: StringFilter<"Category"> | string
-    exercise?: XOR<ExerciseNullableScalarRelationFilter, ExerciseWhereInput> | null
+    exercise?: ExerciseListRelationFilter
   }
 
   export type CategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    exercise?: ExerciseOrderByWithRelationInput
+    exercise?: ExerciseOrderByRelationAggregateInput
   }
 
   export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -3269,7 +3306,7 @@ export namespace Prisma {
     AND?: CategoryWhereInput | CategoryWhereInput[]
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
-    exercise?: XOR<ExerciseNullableScalarRelationFilter, ExerciseWhereInput> | null
+    exercise?: ExerciseListRelationFilter
   }, "id" | "name">
 
   export type CategoryOrderByWithAggregationInput = {
@@ -3313,15 +3350,15 @@ export namespace Prisma {
 
   export type ExerciseWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    cat_id?: number
     name?: string
     AND?: ExerciseWhereInput | ExerciseWhereInput[]
     OR?: ExerciseWhereInput[]
     NOT?: ExerciseWhereInput | ExerciseWhereInput[]
+    cat_id?: IntFilter<"Exercise"> | number
     type?: Enume_typeFilter<"Exercise"> | $Enums.e_type
     mult?: IntFilter<"Exercise"> | number
     Category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
-  }, "id" | "cat_id" | "name">
+  }, "id" | "name">
 
   export type ExerciseOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3349,24 +3386,24 @@ export namespace Prisma {
 
   export type CategoryCreateInput = {
     name: string
-    exercise?: ExerciseCreateNestedOneWithoutCategoryInput
+    exercise?: ExerciseCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateInput = {
     id?: number
     name: string
-    exercise?: ExerciseUncheckedCreateNestedOneWithoutCategoryInput
+    exercise?: ExerciseUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    exercise?: ExerciseUpdateOneWithoutCategoryNestedInput
+    exercise?: ExerciseUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    exercise?: ExerciseUncheckedUpdateOneWithoutCategoryNestedInput
+    exercise?: ExerciseUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryCreateManyInput = {
@@ -3461,9 +3498,14 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type ExerciseNullableScalarRelationFilter = {
-    is?: ExerciseWhereInput | null
-    isNot?: ExerciseWhereInput | null
+  export type ExerciseListRelationFilter = {
+    every?: ExerciseWhereInput
+    some?: ExerciseWhereInput
+    none?: ExerciseWhereInput
+  }
+
+  export type ExerciseOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type CategoryCountOrderByAggregateInput = {
@@ -3581,30 +3623,36 @@ export namespace Prisma {
     _max?: NestedEnume_typeFilter<$PrismaModel>
   }
 
-  export type ExerciseCreateNestedOneWithoutCategoryInput = {
-    create?: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput>
-    connectOrCreate?: ExerciseCreateOrConnectWithoutCategoryInput
-    connect?: ExerciseWhereUniqueInput
+  export type ExerciseCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput> | ExerciseCreateWithoutCategoryInput[] | ExerciseUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: ExerciseCreateOrConnectWithoutCategoryInput | ExerciseCreateOrConnectWithoutCategoryInput[]
+    createMany?: ExerciseCreateManyCategoryInputEnvelope
+    connect?: ExerciseWhereUniqueInput | ExerciseWhereUniqueInput[]
   }
 
-  export type ExerciseUncheckedCreateNestedOneWithoutCategoryInput = {
-    create?: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput>
-    connectOrCreate?: ExerciseCreateOrConnectWithoutCategoryInput
-    connect?: ExerciseWhereUniqueInput
+  export type ExerciseUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput> | ExerciseCreateWithoutCategoryInput[] | ExerciseUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: ExerciseCreateOrConnectWithoutCategoryInput | ExerciseCreateOrConnectWithoutCategoryInput[]
+    createMany?: ExerciseCreateManyCategoryInputEnvelope
+    connect?: ExerciseWhereUniqueInput | ExerciseWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type ExerciseUpdateOneWithoutCategoryNestedInput = {
-    create?: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput>
-    connectOrCreate?: ExerciseCreateOrConnectWithoutCategoryInput
-    upsert?: ExerciseUpsertWithoutCategoryInput
-    disconnect?: ExerciseWhereInput | boolean
-    delete?: ExerciseWhereInput | boolean
-    connect?: ExerciseWhereUniqueInput
-    update?: XOR<XOR<ExerciseUpdateToOneWithWhereWithoutCategoryInput, ExerciseUpdateWithoutCategoryInput>, ExerciseUncheckedUpdateWithoutCategoryInput>
+  export type ExerciseUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput> | ExerciseCreateWithoutCategoryInput[] | ExerciseUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: ExerciseCreateOrConnectWithoutCategoryInput | ExerciseCreateOrConnectWithoutCategoryInput[]
+    upsert?: ExerciseUpsertWithWhereUniqueWithoutCategoryInput | ExerciseUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: ExerciseCreateManyCategoryInputEnvelope
+    set?: ExerciseWhereUniqueInput | ExerciseWhereUniqueInput[]
+    disconnect?: ExerciseWhereUniqueInput | ExerciseWhereUniqueInput[]
+    delete?: ExerciseWhereUniqueInput | ExerciseWhereUniqueInput[]
+    connect?: ExerciseWhereUniqueInput | ExerciseWhereUniqueInput[]
+    update?: ExerciseUpdateWithWhereUniqueWithoutCategoryInput | ExerciseUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: ExerciseUpdateManyWithWhereWithoutCategoryInput | ExerciseUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: ExerciseScalarWhereInput | ExerciseScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -3615,14 +3663,18 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type ExerciseUncheckedUpdateOneWithoutCategoryNestedInput = {
-    create?: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput>
-    connectOrCreate?: ExerciseCreateOrConnectWithoutCategoryInput
-    upsert?: ExerciseUpsertWithoutCategoryInput
-    disconnect?: ExerciseWhereInput | boolean
-    delete?: ExerciseWhereInput | boolean
-    connect?: ExerciseWhereUniqueInput
-    update?: XOR<XOR<ExerciseUpdateToOneWithWhereWithoutCategoryInput, ExerciseUpdateWithoutCategoryInput>, ExerciseUncheckedUpdateWithoutCategoryInput>
+  export type ExerciseUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput> | ExerciseCreateWithoutCategoryInput[] | ExerciseUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: ExerciseCreateOrConnectWithoutCategoryInput | ExerciseCreateOrConnectWithoutCategoryInput[]
+    upsert?: ExerciseUpsertWithWhereUniqueWithoutCategoryInput | ExerciseUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: ExerciseCreateManyCategoryInputEnvelope
+    set?: ExerciseWhereUniqueInput | ExerciseWhereUniqueInput[]
+    disconnect?: ExerciseWhereUniqueInput | ExerciseWhereUniqueInput[]
+    delete?: ExerciseWhereUniqueInput | ExerciseWhereUniqueInput[]
+    connect?: ExerciseWhereUniqueInput | ExerciseWhereUniqueInput[]
+    update?: ExerciseUpdateWithWhereUniqueWithoutCategoryInput | ExerciseUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: ExerciseUpdateManyWithWhereWithoutCategoryInput | ExerciseUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: ExerciseScalarWhereInput | ExerciseScalarWhereInput[]
   }
 
   export type CategoryCreateNestedOneWithoutExerciseInput = {
@@ -3747,28 +3799,36 @@ export namespace Prisma {
     create: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput>
   }
 
-  export type ExerciseUpsertWithoutCategoryInput = {
-    update: XOR<ExerciseUpdateWithoutCategoryInput, ExerciseUncheckedUpdateWithoutCategoryInput>
-    create: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput>
-    where?: ExerciseWhereInput
+  export type ExerciseCreateManyCategoryInputEnvelope = {
+    data: ExerciseCreateManyCategoryInput | ExerciseCreateManyCategoryInput[]
+    skipDuplicates?: boolean
   }
 
-  export type ExerciseUpdateToOneWithWhereWithoutCategoryInput = {
-    where?: ExerciseWhereInput
+  export type ExerciseUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: ExerciseWhereUniqueInput
+    update: XOR<ExerciseUpdateWithoutCategoryInput, ExerciseUncheckedUpdateWithoutCategoryInput>
+    create: XOR<ExerciseCreateWithoutCategoryInput, ExerciseUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type ExerciseUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: ExerciseWhereUniqueInput
     data: XOR<ExerciseUpdateWithoutCategoryInput, ExerciseUncheckedUpdateWithoutCategoryInput>
   }
 
-  export type ExerciseUpdateWithoutCategoryInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    type?: Enume_typeFieldUpdateOperationsInput | $Enums.e_type
-    mult?: IntFieldUpdateOperationsInput | number
+  export type ExerciseUpdateManyWithWhereWithoutCategoryInput = {
+    where: ExerciseScalarWhereInput
+    data: XOR<ExerciseUpdateManyMutationInput, ExerciseUncheckedUpdateManyWithoutCategoryInput>
   }
 
-  export type ExerciseUncheckedUpdateWithoutCategoryInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    type?: Enume_typeFieldUpdateOperationsInput | $Enums.e_type
-    mult?: IntFieldUpdateOperationsInput | number
+  export type ExerciseScalarWhereInput = {
+    AND?: ExerciseScalarWhereInput | ExerciseScalarWhereInput[]
+    OR?: ExerciseScalarWhereInput[]
+    NOT?: ExerciseScalarWhereInput | ExerciseScalarWhereInput[]
+    id?: IntFilter<"Exercise"> | number
+    cat_id?: IntFilter<"Exercise"> | number
+    name?: StringFilter<"Exercise"> | string
+    type?: Enume_typeFilter<"Exercise"> | $Enums.e_type
+    mult?: IntFilter<"Exercise"> | number
   }
 
   export type CategoryCreateWithoutExerciseInput = {
@@ -3803,6 +3863,33 @@ export namespace Prisma {
   export type CategoryUncheckedUpdateWithoutExerciseInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ExerciseCreateManyCategoryInput = {
+    id?: number
+    name: string
+    type?: $Enums.e_type
+    mult?: number
+  }
+
+  export type ExerciseUpdateWithoutCategoryInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    type?: Enume_typeFieldUpdateOperationsInput | $Enums.e_type
+    mult?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ExerciseUncheckedUpdateWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    type?: Enume_typeFieldUpdateOperationsInput | $Enums.e_type
+    mult?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ExerciseUncheckedUpdateManyWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    type?: Enume_typeFieldUpdateOperationsInput | $Enums.e_type
+    mult?: IntFieldUpdateOperationsInput | number
   }
 
 
